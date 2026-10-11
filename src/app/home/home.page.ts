@@ -41,7 +41,10 @@ export class HomePage {
     this.cargando.set(true);
     try {
       const datos = await this.restauranteService.getAll();
-      this.restaurantesCargados.set(datos);
+      datos.sort((a, b) =>
+        a.documentName.localeCompare(b.documentName, 'es', { sensitivity: 'base' })
+      );
+    this.restaurantesCargados.set(datos);
       this.mostrarToast(`${datos.length} restaurantes cargados`, 'success');
     } catch {
       this.mostrarToast('Error al cargar los datos desde Firebase', 'danger');
